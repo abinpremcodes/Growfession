@@ -1,0 +1,550 @@
+
+/* ========================================
+   1. Global Styles
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #edf2ee;
+    color: #263b36;
+}
+
+
+/* ========================================
+   2. Main Registration Card
+   No fixed height: content controls height.
+======================================== */
+
+.register-page {
+    width: calc(100% - 64px);
+    max-width: 1390px;
+
+    min-height: calc(100vh - 28px);
+    min-height: calc(100svh - 28px);
+
+    margin: 14px auto;
+
+    display: flex;
+    align-items: stretch;
+
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(27, 64, 49, 0.10);
+}
+
+
+/* ========================================
+   3. Left Branding Panel
+======================================== */
+
+.register-brand {
+    flex: 0 0 44%;
+
+    display: flex;
+    align-items: stretch;
+
+    padding: 60px 52px;
+
+    background: linear-gradient(145deg, #123c35, #176b5b);
+    color: #ffffff;
+
+    border-radius: 24px 0 0 24px;
+}
+
+.brand-content {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-logo {
+    display: inline-block;
+    width: fit-content;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+}
+
+.brand-logo span {
+    color: #70d6b5;
+}
+
+.brand-message {
+    margin-top: 115px;
+}
+
+.brand-tagline {
+    color: #85dfc3;
+
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    margin-bottom: 28px;
+}
+
+.brand-message h1 {
+    font-size: clamp(36px, 4vw, 62px);
+    line-height: 1.16;
+
+    font-weight: 700;
+    letter-spacing: -1.8px;
+
+    margin-bottom: 28px;
+}
+
+.brand-message h1 span {
+    display: block;
+    color: #85dfc3;
+}
+
+.brand-description {
+    max-width: 490px;
+
+    color: #d1e7df;
+
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+.brand-footer {
+    margin-top: auto;
+    padding-top: 50px;
+
+    color: #b6d8cc;
+    font-size: 17px;
+}
+
+
+/* ========================================
+   4. Right Registration Panel
+   Starts at the top and grows naturally.
+======================================== */
+
+.register-form-section {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 45px 60px;
+
+    background: #ffffff;
+
+    border-radius: 0 24px 24px 0;
+}
+
+.register-container {
+    width: 100%;
+    max-width: 630px;
+    margin: 0 auto;
+}
+
+
+/* ========================================
+   5. Form Heading
+======================================== */
+
+.form-heading {
+    margin-bottom: 28px;
+}
+
+.welcome-text {
+    color: #21856d;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+
+    margin-bottom: 10px;
+}
+
+.form-heading h2 {
+    color: #173e35;
+
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+
+    margin-bottom: 10px;
+}
+
+.form-heading > p:last-child {
+    color: #788b83;
+
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   6. Form Fields
+======================================== */
+
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    min-width: 0;
+}
+
+.form-field label {
+    color: #344d44;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form-field input,
+.form-field select {
+    display: block;
+    width: 100%;
+    min-height: 54px;
+
+    padding: 12px 15px;
+
+    border: 1px solid #dce7e1;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #263b36;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color: #299879;
+
+    box-shadow: 0 0 0 4px rgba(41, 152, 121, 0.12);
+}
+
+.form-field input::placeholder {
+    color: #a3b3aa;
+}
+
+
+/* ========================================
+   7. Django Help Text
+======================================== */
+
+.field-help {
+    color: #84968d;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.field-help ul {
+    padding-left: 23px;
+    margin: 3px 0 0;
+}
+
+.field-help li {
+    margin-bottom: 2px;
+}
+
+.field-error {
+    color: #d63f52;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   8. Create Account Button
+======================================== */
+
+.register-button {
+    width: 100%;
+    min-height: 60px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: linear-gradient(110deg, #176b5b, #299879);
+
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.register-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(23, 107, 91, 0.20);
+}
+
+.register-button:focus-visible {
+    outline: 3px solid rgba(41, 152, 121, 0.3);
+    outline-offset: 3px;
+}
+
+
+/* ========================================
+   9. Login Link and Terms
+======================================== */
+
+.login-link {
+    margin-top: 20px;
+
+    color: #788b83;
+
+    font-size: 16px;
+    text-align: center;
+}
+
+.login-link a {
+    color: #21856d;
+
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.terms-text {
+    margin-top: 14px;
+
+    color: #9aa99f;
+
+    font-size: 12px;
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   10. Django Messages
+======================================== */
+
+.register-container .alert {
+    padding: 12px 15px;
+    margin-bottom: 18px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   11. Tablet Layout
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .register-page {
+        width: calc(100% - 40px);
+    }
+
+    .register-brand {
+        flex-basis: 40%;
+        padding: 45px 30px;
+    }
+
+    .register-form-section {
+        padding: 40px 32px;
+    }
+
+    .brand-logo {
+        font-size: 30px;
+    }
+
+    .brand-message {
+        margin-top: 90px;
+    }
+
+    .brand-message h1 {
+        font-size: 39px;
+    }
+
+    .brand-description {
+        font-size: 16px;
+    }
+
+    .form-heading h2 {
+        font-size: 30px;
+    }
+}
+
+
+/* ========================================
+   12. Mobile and Narrow Tablet Layout
+======================================== */
+
+@media (max-width: 760px) {
+
+    .register-page {
+        width: calc(100% - 32px);
+
+        min-height: auto;
+
+        margin: 16px auto;
+
+        flex-direction: column;
+    }
+
+    .register-brand {
+        flex: none;
+        width: 100%;
+
+        padding: 30px 28px;
+
+        border-radius: 24px 24px 0 0;
+    }
+
+    .brand-content {
+        min-height: auto;
+    }
+
+    .brand-logo {
+        font-size: 29px;
+    }
+
+    .brand-message {
+        margin-top: 35px;
+    }
+
+    .brand-tagline {
+        font-size: 11px;
+        margin-bottom: 15px;
+    }
+
+    .brand-message h1 {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+
+    .brand-description {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .brand-footer {
+        display: none;
+    }
+
+    .register-form-section {
+        flex: none;
+        width: 100%;
+
+        padding: 35px 28px;
+
+        border-radius: 0 0 24px 24px;
+    }
+
+    .form-heading h2 {
+        font-size: 29px;
+    }
+
+    .form-heading > p:last-child {
+        font-size: 14px;
+    }
+
+    .registration-form {
+        gap: 14px;
+    }
+
+    .form-field input,
+    .form-field select {
+        min-height: 48px;
+    }
+
+    .register-button {
+        min-height: 52px;
+    }
+}
+
+
+/* ========================================
+   13. Small Mobile Screens
+======================================== */
+
+@media (max-width: 400px) {
+
+    .register-page {
+        width: calc(100% - 20px);
+        margin: 10px auto;
+    }
+
+    .register-brand {
+        padding: 25px 20px;
+    }
+
+    .brand-message h1 {
+        font-size: 30px;
+    }
+
+    .brand-description {
+        font-size: 13px;
+    }
+
+    .register-form-section {
+        padding: 28px 20px;
+    }
+
+    .form-heading h2 {
+        font-size: 25px;
+    }
+
+    .form-heading > p:last-child {
+        font-size: 13px;
+    }
+
+    .form-field label {
+        font-size: 14px;
+    }
+
+    .field-help {
+        font-size: 11px;
+    }
+
+    .login-link {
+        font-size: 14px;
+    }
+}

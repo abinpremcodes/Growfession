@@ -1,31 +1,153 @@
 
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Join Growfession</title>
+    <title>Create Account | Growfession</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/register.css' %}">
 </head>
 <body>
 
-    <h1>Create Your Growfession Account</h1>
+    <main class="register-page">
 
-    <!-- Display Django messages -->
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
+        <!-- Left Side: Branding -->
+        <section class="register-brand">
+            <div class="brand-content">
 
-    <!-- Registration Form -->
-    <form method="POST">
-        {% csrf_token %}
+                <a href="#" class="brand-logo">
+                    Growfession<span>.</span>
+                </a>
 
-        {{ form.as_p }}
+                <div class="brand-message">
+                    <p class="brand-tagline">YOUR CAREER. YOUR GROWTH.</p>
 
-        <button type="submit">Create Account</button>
-    </form>
+                    <h1>
+                        Build your future.
+                        <span>One step at a time.</span>
+                    </h1>
+
+                    <p class="brand-description">
+                        A place to showcase your skills, manage your career
+                        journey and connect with opportunities.
+                    </p>
+                </div>
+
+                <p class="brand-footer">
+                    Grow beyond your limits.
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- Right Side: Registration Form -->
+        <section class="register-form-section">
+
+            <div class="register-container">
+
+                <div class="form-heading">
+                    <p class="welcome-text">GET STARTED TODAY</p>
+
+                    <h2>Create your account</h2>
+
+                    <p>
+                        Join Growfession and start building your career journey.
+                    </p>
+                </div>
+
+
+                <!-- Success Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+
+                <!-- Registration Form -->
+                <form method="POST" class="registration-form">
+
+                    {% csrf_token %}
+
+                    {% for field in form %}
+
+                        <div class="form-field">
+
+                            <label for="{{ field.id_for_label }}">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.help_text %}
+                                <small class="field-help">
+                                    {{ field.help_text|safe }}
+                                </small>
+                            {% endif %}
+
+                            {% for error in field.errors %}
+                                <small class="field-error">
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+
+                        </div>
+
+                    {% endfor %}
+
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+
+                    <button type="submit" class="register-button">
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <p class="login-link">
+                    Already have an account?
+                    <a href="{% url 'login' %}">Login</a>
+                </p>
+
+                <p class="terms-text">
+                    By creating an account, you agree to use Growfession
+                    responsibly.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="{% static 'accounts/js/register.js' %}"></script>
 
 </body>
 </html>
