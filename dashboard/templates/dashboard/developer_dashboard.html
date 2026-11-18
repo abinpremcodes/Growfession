@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Developer Dashboard | Growfession</title>
+    <title>Add Project | Growfession</title>
 
     <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
 </head>
@@ -16,207 +16,39 @@
 
     <div class="dashboard-layout">
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-
-            <div class="brand">
-                <h2>Growfession<span>.</span></h2>
-                <p>Build your future</p>
-            </div>
-
-            <nav class="sidebar-nav">
-
-                <p class="nav-heading">WORKSPACE</p>
-
-                <a href="#overview" class="nav-link active">
-                    Overview
-                </a>
-
-                <a href="#projects" class="nav-link">
-                    My Projects
-                </a>
-
-                <a href="#tasks" class="nav-link">
-                    Tasks
-                </a>
-
-                <a href="#learning" class="nav-link">
-                    Learning Goals
-                </a>
-
-                <p class="nav-heading">CAREER</p>
-
-                <a href="#jobs" class="nav-link">
-                    Find Jobs
-                </a>
-
-                <a href="#applications" class="nav-link">
-                    My Applications
-                </a>
-
-                <a href="#github" class="nav-link">
-                    GitHub Integration
-                </a>
-
-            </nav>
-
-            <div class="sidebar-bottom">
-                <p>Growfession</p>
-                <span>Build your future, one step at a time.</span>
-            </div>
-
-        </aside>
-
-
-        <!-- Main Content -->
         <main class="main-content">
 
-            <!-- Topbar -->
             <header class="topbar">
-
                 <div>
                     <p class="topbar-label">DEVELOPER WORKSPACE</p>
-                    <h3>Dashboard</h3>
+                    <h3>My Projects</h3>
                 </div>
 
-                <div class="user-profile">
-                    <div class="user-avatar">
-                        {{ request.user.username|first|upper }}
-                    </div>
-
-                    <div class="user-details">
-                        <strong>{{ request.user.username }}</strong>
-                        <span>Developer</span>
-                    </div>
-                </div>
-
+                <a href="{% url 'project_list' %}">Back to Projects</a>
             </header>
 
-
-            <!-- Dashboard Overview -->
-            <section class="welcome-section" id="overview">
-
-                <div class="welcome-content">
-                    <p class="section-label">YOUR JOURNEY STARTS HERE</p>
-
-                    <h1>Welcome back, {{ request.user.username }}!</h1>
-
-                    <p>
-                        Every project you build and every skill you learn
-                        brings you one step closer to your future.
-                    </p>
-                </div>
-
-            </section>
-
-
-            <!-- Developer Hub -->
             <section class="content-section">
 
                 <div class="section-heading">
                     <div>
-                        <p class="section-label">YOUR PERSONAL WORKSPACE</p>
-                        <h2>Developer Hub</h2>
+                        <p class="section-label">SHOWCASE YOUR WORK</p>
+                        <h2>Add a New Project</h2>
                         <p class="section-description">
-                            Organise your work, track your progress and
-                            keep growing as a developer.
+                            Tell us about something you've built.
                         </p>
                     </div>
                 </div>
 
+                <form method="POST">
+                    {% csrf_token %}
 
-                <div class="feature-grid">
+                    {{ form.as_p }}
 
-                    <article class="feature-card" id="projects">
-                        <div class="feature-icon">01</div>
-                        <h3>My Projects</h3>
-                        <p>
-                            Create projects, manage their progress and
-                            showcase what you build.
-                        </p>
-                        <span class="feature-status">Coming soon</span>
-                    </article>
-
-
-                    <article class="feature-card" id="tasks">
-                        <div class="feature-icon">02</div>
-                        <h3>My Tasks</h3>
-                        <p>
-                            Break your work into manageable tasks and
-                            keep track of completed activities.
-                        </p>
-                        <span class="feature-status">Coming soon</span>
-                    </article>
-
-
-                    <article class="feature-card" id="learning">
-                        <div class="feature-icon">03</div>
-                        <h3>Learning Goals</h3>
-                        <p>
-                            Set learning goals, develop new skills and
-                            track your learning journey.
-                        </p>
-                        <span class="feature-status">Coming soon</span>
-                    </article>
-
-                </div>
+                    <button type="submit">Save Project</button>
+                    <a href="{% url 'project_list' %}">Cancel</a>
+                </form>
 
             </section>
-
-
-            <!-- Career Section -->
-            <section class="content-section">
-
-                <div class="section-heading">
-                    <div>
-                        <p class="section-label">GROW YOUR CAREER</p>
-                        <h2>Career Opportunities</h2>
-                    </div>
-                </div>
-
-
-                <div class="feature-grid">
-
-                    <article class="feature-card" id="jobs">
-                        <div class="feature-icon">04</div>
-                        <h3>Find Jobs</h3>
-                        <p>
-                            Explore opportunities that match your
-                            interests and technical skills.
-                        </p>
-                        <span class="feature-status">Coming soon</span>
-                    </article>
-
-
-                    <article class="feature-card" id="applications">
-                        <div class="feature-icon">05</div>
-                        <h3>My Applications</h3>
-                        <p>
-                            Keep your job applications organised and
-                            follow their progress.
-                        </p>
-                        <span class="feature-status">Coming soon</span>
-                    </article>
-
-
-                    <article class="feature-card" id="github">
-                        <div class="feature-icon">06</div>
-                        <h3>GitHub Integration</h3>
-                        <p>
-                            Connect your GitHub account to bring your
-                            repository activity into Growfession.
-                        </p>
-                        <span class="feature-status">Optional integration</span>
-                    </article>
-
-                </div>
-
-            </section>
-
-
-            <footer class="dashboard-footer">
-                <p>Growfession © 2026. Build your future, one step at a time.</p>
-            </footer>
 
         </main>
 

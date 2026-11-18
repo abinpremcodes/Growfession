@@ -1,0 +1,86 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Project | Growfession</title>
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+</head>
+
+<body class="project-form-page">
+
+    <div class="dashboard-layout">
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="topbar-label">DEVELOPER WORKSPACE</p>
+                    <h3>My Projects</h3>
+                </div>
+
+                <a href="{% url 'project_list' %}">
+                    Back to Projects
+                </a>
+            </header>
+
+            <section class="content-section">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">SHOWCASE YOUR WORK</p>
+                        <h2>Add a New Project</h2>
+                        <p class="section-description">
+                            Tell us about something you've built.
+                            Every project is another step in your journey.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-form-card">
+
+                    <div class="project-form-header">
+                        <div>
+                            <span class="project-form-icon">01</span>
+                            <h3>Project Information</h3>
+                            <p>Fill in the details of your project below.</p>
+                        </div>
+                    </div>
+
+                    <form method="POST" class="project-form">
+
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        <div class="project-form-actions">
+                            <button type="submit" class="project-submit-btn">
+                                Save Project
+                            </button>
+
+                            <a href="{% url 'project_list' %}" class="project-cancel-btn">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+            <footer class="dashboard-footer">
+                <p>Growfession © 2026. Build your future, one step at a time.</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Projects | Growfession</title>
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+</head>
+
+<body class="project-list-page">
+
+    <div class="dashboard-layout">
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <p class="topbar-label">DEVELOPER WORKSPACE</p>
+                    <h3>My Projects</h3>
+                </div>
+
+                <a href="{% url 'developer_dashboard' %}" class="back-dashboard-btn">
+                    Back to Dashboard
+                </a>
+
+            </header>
+
+            <section class="project-hero">
+
+                <div>
+                    <p class="section-label">YOUR CREATIVE SPACE</p>
+
+                    <h1>Things I've Built.</h1>
+
+                    <p>
+                        Every project tells a story of learning, creativity
+                        and problem-solving. Keep building your journey.
+                    </p>
+                </div>
+
+                <a href="{% url 'project_create' %}" class="add-project-btn">
+                    + Add New Project
+                </a>
+
+            </section>
+
+            <section class="content-section">
+
+                <div class="project-section-heading">
+
+                    <div>
+                        <p class="section-label">YOUR PORTFOLIO</p>
+                        <h2>All Projects</h2>
+                    </div>
+
+                    <span class="project-count">
+                        {{ projects|length }} Projects
+                    </span>
+
+                </div>
+
+                <div class="project-grid">
+
+                    {% for project in projects %}
+
+                        <article class="project-card">
+
+                            <div class="project-card-top">
+
+                                <span class="project-number">
+                                    PROJECT {{ forloop.counter|stringformat:"02d" }}
+                                </span>
+
+                                <span class="project-status status-{{ project.status|lower }}">
+                                    {{ project.get_status_display }}
+                                </span>
+
+                            </div>
+
+                            <h3>{{ project.title }}</h3>
+
+                            <p class="project-description">
+                                {{ project.description }}
+                            </p>
+
+                            <div class="project-tech-section">
+
+                                <span class="project-detail-label">
+                                    TECHNOLOGIES
+                                </span>
+
+                                <div class="project-tech-list">
+                                    <span class="tech-tag">
+                                        {{ project.tech_stack }}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="project-card-links">
+
+                                {% if project.live_url %}
+                                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer">
+                                        Live Preview ↗
+                                    </a>
+                                {% endif %}
+
+                                {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer">
+                                        GitHub ↗
+                                    </a>
+                                {% endif %}
+
+                            </div>
+
+                        </article>
+
+                    {% empty %}
+
+                        <div class="project-empty-state">
+
+                            <div class="empty-project-icon">01</div>
+
+                            <h3>Your journey starts with one project.</h3>
+
+                            <p>
+                                You haven't added any projects yet.
+                                Showcase something you've built and start
+                                creating your developer portfolio.
+                            </p>
+
+                            <a href="{% url 'project_create' %}" class="add-project-btn">
+                                Add Your First Project
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+            <footer class="dashboard-footer">
+                <p>Growfession © 2026. Build your future, one step at a time.</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
