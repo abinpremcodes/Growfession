@@ -814,7 +814,7 @@ body {
 }
 
 .project-card {
-    background: white;
+    background: #EDF7F2;
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 26px;
@@ -1051,4 +1051,403 @@ body {
         flex-direction: column;
     }
 }
+
+
+
+/* ==================================
+   EDIT PROJECT BUTTON
+================================== */
+
+.project-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.edit-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 11px 20px;
+
+    background: var(--primary-dark);
+    color: white;
+
+    border: 1px solid var(--primary-dark);
+    border-radius: 9px;
+
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+
+    transition: background 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.edit-project-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(18, 60, 53, 0.15);
+}
+
+.edit-project-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 700px) {
+    .project-card-actions {
+        width: 100%;
+    }
+
+    .edit-project-btn {
+        width: 100%;
+        min-height: 44px;
+    }
+}
+
+/* PROJECT CARD ACTION BUTTONS */
+
+.project-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.project-card-actions form {
+    margin: 0;
+    flex: 1;
+}
+
+.project-card-actions .edit-project-btn,
+.project-card-actions .edit-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 11px 20px;
+    background: var(--primary-dark);
+    color: white;
+    border: 1px solid var(--primary-dark);
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.project-card-actions .delete-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 8px 12px;
+    background: #FCE8E8;
+    color: #A83232;
+    border: 1px solid #F3CCCC;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.project-card-actions .edit-project-btn {
+    background: var(--primary-dark);
+    color: white;
+    border: 1px solid var(--primary-dark);
+}
+
+.project-card-actions .edit-project-btn:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+.project-card-actions .delete-project-btn {
+    background: #FCE8E8;
+    color: #A83232;
+    border: 1px solid #F3CCCC;
+}
+
+.project-card-actions .delete-project-btn:hover {
+    background: #F8DADA;
+    border-color: #E9BABA;
+    transform: translateY(-2px);
+}
+
+.project-card-actions button:focus-visible,
+.project-card-actions a:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Mobile responsive buttons */
+
+@media (max-width: 480px) {
+    .project-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+     .project-card-actions form {
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+    .project-card-actions .edit-project-btn,
+    .project-card-actions .delete-project-btn {
+        min-height: 46px;
+    }
+}
+
+
+/* ==================================
+   DELETE CONFIRMATION MODAL
+================================== */
+
+.delete-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: rgba(18, 40, 34, 0.55);
+    backdrop-filter: blur(5px);
+}
+
+.delete-modal-overlay.active {
+    display: flex;
+}
+
+.delete-modal {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px 28px;
+
+    background: #ffffff;
+    border: 1px solid #e8eeea;
+    border-radius: 20px;
+
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(18, 60, 53, 0.18);
+
+    animation: deleteModalAppear 0.25s ease;
+}
+
+.delete-modal-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fce8e8;
+    color: #a83232;
+    border-radius: 50%;
+
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.delete-modal h2 {
+    margin: 0 0 10px;
+    color: #123c35;
+    font-family: 'Manrope', sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.delete-modal p {
+    margin: 0;
+    color: #7b8984;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.delete-modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.cancel-delete-btn,
+.confirm-delete-btn {
+    flex: 1;
+    min-height: 44px;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-delete-btn {
+    background: #f0f5f1;
+    color: #263b36;
+    border: 1px solid #e0e9e2;
+}
+
+.cancel-delete-btn:hover {
+    background: #e5eee7;
+}
+
+.confirm-delete-btn {
+    background: #a83232;
+    color: #ffffff;
+    border: 1px solid #a83232;
+}
+
+.confirm-delete-btn:hover {
+    background: #8e2525;
+    transform: translateY(-2px);
+}
+
+@keyframes deleteModalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .delete-modal {
+        padding: 28px 20px;
+    }
+
+    .delete-modal-actions {
+        flex-direction: column-reverse;
+    }
+}
+
+
+/* =========================================
+   DEVELOPER DASHBOARD FEATURE CARDS
+========================================= */
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 25px;
+}
+
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 245px;
+    padding: 26px;
+    background: #ffffff;
+    border: 1px solid #e8eeea;
+    border-radius: 18px;
+    text-decoration: none;
+    color: #263b36;
+    box-shadow: 0 5px 20px rgba(18, 60, 53, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+                border-color 0.25s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: #70d6b5;
+    box-shadow: 0 12px 28px rgba(18, 60, 53, 0.10);
+}
+
+.feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 20px;
+    border-radius: 13px;
+    background: #e5f2ed;
+    color: #176b5b;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.feature-status {
+    margin-bottom: 10px;
+    padding: 6px 11px;
+    border-radius: 20px;
+    background: #f0f6f3;
+    color: #176b5b;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.feature-card h3 {
+    margin: 0 0 10px;
+    color: #123c35;
+    font-family: 'Manrope', sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.feature-card p {
+    margin: 0 0 20px;
+    color: #7b8984;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.feature-card > span {
+    margin-top: auto;
+    color: #176b5b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .feature-card {
+        min-height: 220px;
+        padding: 22px;
+    }
+}
+
+
 

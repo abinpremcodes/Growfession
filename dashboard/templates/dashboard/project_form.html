@@ -7,7 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Add Project | Growfession</title>
+    <title>
+        {% if project %}Edit Project{% else %}Add Project{% endif %} | Growfession
+    </title>
 
     <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
 </head>
@@ -34,10 +36,22 @@
                 <div class="section-heading">
                     <div>
                         <p class="section-label">SHOWCASE YOUR WORK</p>
-                        <h2>Add a New Project</h2>
+
+                        <h2>
+                            {% if project %}
+                                Edit Your Project
+                            {% else %}
+                                Add a New Project
+                            {% endif %}
+                        </h2>
+
                         <p class="section-description">
-                            Tell us about something you've built.
-                            Every project is another step in your journey.
+                            {% if project %}
+                                Update your project details and keep your portfolio current.
+                            {% else %}
+                                Tell us about something you've built.
+                                Every project is another step in your journey.
+                            {% endif %}
                         </p>
                     </div>
                 </div>
@@ -47,8 +61,16 @@
                     <div class="project-form-header">
                         <div>
                             <span class="project-form-icon">01</span>
+
                             <h3>Project Information</h3>
-                            <p>Fill in the details of your project below.</p>
+
+                            <p>
+                                {% if project %}
+                                    Make the changes you need below.
+                                {% else %}
+                                    Fill in the details of your project below.
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
 
@@ -59,13 +81,19 @@
                         {{ form.as_p }}
 
                         <div class="project-form-actions">
+
                             <button type="submit" class="project-submit-btn">
-                                Save Project
+                                {% if project %}
+                                    Save Changes
+                                {% else %}
+                                    Save Project
+                                {% endif %}
                             </button>
 
                             <a href="{% url 'project_list' %}" class="project-cancel-btn">
                                 Cancel
                             </a>
+
                         </div>
 
                     </form>
