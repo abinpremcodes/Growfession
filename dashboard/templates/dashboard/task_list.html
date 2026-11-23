@@ -1,0 +1,247 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Tasks | Growfession</title>
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+</head>
+
+<body class="project-list-page">
+
+    <div class="dashboard-layout">
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="topbar-label">DEVELOPER WORKSPACE</p>
+                    <h3>My Tasks</h3>
+                </div>
+
+                <a href="{% url 'developer_dashboard' %}" class="back-dashboard-btn">
+                    Back to Dashboard
+                </a>
+            </header>
+
+            <section class="project-hero">
+                <div>
+                    <p class="section-label">YOUR DAILY PROGRESS</p>
+
+                    <h1>Small Steps. Big Goals.</h1>
+
+                    <p>
+                        Organise your work, track your progress and stay
+                        focused on becoming a better developer.
+                    </p>
+                </div>
+
+                <a href="{% url 'task_create' %}" class="add-project-btn">
+                    + Add New Task
+                </a>
+            </section>
+
+            <section class="content-section">
+
+                <div class="project-section-heading">
+                    <div>
+                        <p class="section-label">YOUR WORKSPACE</p>
+                        <h2>All Tasks</h2>
+                    </div>
+
+                    <span class="project-count">
+                        {{ tasks|length }} Tasks
+                    </span>
+                </div>
+
+                <div class="project-grid">
+
+                    {% for task in tasks %}
+
+                        <article class="project-card task-card">
+
+                            <div class="project-card-top">
+
+                                <span class="project-number">
+                                    TASK {{ forloop.counter|stringformat:"02d" }}
+                                </span>
+
+                                <span class="project-status status-{{ task.status|lower }}">
+                                    {{ task.get_status_display }}
+                                </span>
+
+                            </div>
+
+                            <h3>{{ task.title }}</h3>
+
+                            <p class="project-description">
+                                {% if task.description %}
+                                    {{ task.description }}
+                                {% else %}
+                                    No description added.
+                                {% endif %}
+                            </p>
+
+                            <div class="task-information">
+
+                                <div>
+                                    <span class="project-detail-label">PRIORITY</span>
+
+                                    <span class="task-priority priority-{{ task.priority|lower }}">
+                                        {{ task.get_priority_display }}
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <span class="project-detail-label">DUE DATE</span>
+
+                                    <span class="task-due-date">
+                                        {% if task.due_date %}
+                                            {{ task.due_date|date:"d M Y" }}
+                                        {% else %}
+                                            No deadline
+                                        {% endif %}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="project-card-actions">
+
+                                <a href="{% url 'task_edit' task.id %}" class="edit-project-btn">
+                                    Edit Task
+                                </a>
+
+                                <form method="POST"
+                                      action="{% url 'task_delete' task.id %}"
+                                      class="delete-project-form">
+
+                                    {% csrf_token %}
+
+                                    <button type="button"
+                                            class="delete-project-btn delete-task-trigger">
+                                        Delete Task
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </article>
+
+                    {% empty %}
+
+                        <div class="project-empty-state">
+
+                            <div class="empty-project-icon">01</div>
+
+                            <h3>Your next achievement starts here.</h3>
+
+                            <p>
+                                You haven't created any tasks yet.
+                                Add your first task and start organising
+                                your developer journey.
+                            </p>
+
+                            <a href="{% url 'task_create' %}" class="add-project-btn">
+                                Create Your First Task
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+            <footer class="dashboard-footer">
+                <p>Growfession © 2026. Build your future, one step at a time.</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+
+    <div class="delete-modal-overlay" id="deleteModal">
+
+        <div class="delete-modal">
+
+            <div class="delete-modal-icon">
+                <span>!</span>
+            </div>
+
+            <h2>Delete this task?</h2>
+
+            <p>
+                Are you sure you want to delete this task?
+                This action cannot be undone.
+            </p>
+
+            <div class="delete-modal-actions">
+
+                <button type="button" class="cancel-delete-btn" id="cancelDelete">
+                    Cancel
+                </button>
+
+                <button type="button" class="confirm-delete-btn" id="confirmDelete">
+                    Yes, Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const deleteModal = document.getElementById("deleteModal");
+        const cancelDelete = document.getElementById("cancelDelete");
+        const confirmDelete = document.getElementById("confirmDelete");
+
+        let selectedDeleteForm = null;
+
+        document.querySelectorAll(".delete-task-trigger").forEach(button => {
+
+            button.addEventListener("click", function () {
+                selectedDeleteForm = this.closest("form");
+                deleteModal.classList.add("active");
+            });
+
+        });
+
+        cancelDelete.addEventListener("click", function () {
+            deleteModal.classList.remove("active");
+            selectedDeleteForm = null;
+        });
+
+        confirmDelete.addEventListener("click", function () {
+            if (selectedDeleteForm) {
+                selectedDeleteForm.submit();
+            }
+        });
+
+        deleteModal.addEventListener("click", function (event) {
+            if (event.target === deleteModal) {
+                deleteModal.classList.remove("active");
+                selectedDeleteForm = null;
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                deleteModal.classList.remove("active");
+                selectedDeleteForm = null;
+            }
+        });
+    </script>
+
+</body>
+</html>

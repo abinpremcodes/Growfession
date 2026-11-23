@@ -1450,4 +1450,246 @@ body {
 }
 
 
+/* =========================================
+   MY TASKS PAGE
+========================================= */
+
+/* Task information */
+
+.task-information {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.task-information > div {
+    min-width: 0;
+}
+
+.task-priority,
+.task-due-date {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.priority-low {
+    color: #237344;
+    background: #e3f4e8;
+    padding: 7px 11px;
+    border-radius: 20px;
+}
+
+.priority-medium {
+    color: #956515;
+    background: #fff2d6;
+    padding: 7px 11px;
+    border-radius: 20px;
+}
+
+.priority-high {
+    color: #a83232;
+    background: #fce8e8;
+    padding: 7px 11px;
+    border-radius: 20px;
+}
+
+/* Task status */
+
+.status-pending {
+    background: #f0f1f1;
+    color: #68736f;
+}
+
+.status-in_progress {
+    background: #e5f2ed;
+    color: #176b5b;
+}
+
+/* Task cards */
+
+.task-card {
+    min-height: 300px;
+}
+
+/* =========================================
+   TASK FORM PAGE
+========================================= */
+
+.project-form-container {
+    max-width: 850px;
+    margin: 0 auto 45px;
+    padding: 34px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(25, 65, 52, 0.05);
+}
+
+.project-form-container .project-section-heading {
+    padding-bottom: 22px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border);
+}
+
+.project-form {
+    width: 100%;
+}
+
+.form-field {
+    margin-bottom: 23px;
+    min-width: 0;
+}
+
+.form-field label {
+    display: block;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.project-form input,
+.project-form textarea,
+.project-form select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 13px 15px;
+    border: 1px solid #dfe8e2;
+    border-radius: 9px;
+    background: #fbfdfb;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-form textarea {
+    min-height: 125px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.project-form input:focus,
+.project-form textarea:focus,
+.project-form select:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(23, 107, 91, 0.09);
+}
+
+.task-form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.field-error {
+    display: block;
+    margin-top: 7px;
+    color: #c0392b;
+    font-size: 12px;
+}
+
+.form-errors {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #fce8e8;
+    color: #a83232;
+    font-size: 12px;
+}
+
+.form-errors ul {
+    padding-left: 18px;
+}
+
+.project-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 13px;
+    padding-top: 25px;
+    margin-top: 8px;
+    border-top: 1px solid var(--border);
+}
+
+.cancel-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 20px;
+    border-radius: 9px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.cancel-project-btn:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.project-form-actions .add-project-btn {
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* =========================================
+   TASK PAGE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 700px) {
+
+    .project-form-container {
+        padding: 24px 18px;
+        border-radius: 14px;
+    }
+
+    .task-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .project-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .project-form-actions .add-project-btn,
+    .cancel-project-btn {
+        width: 100%;
+        min-height: 46px;
+        text-align: center;
+    }
+
+    .task-information {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .project-form-container {
+        padding: 20px 14px;
+    }
+
+    .task-information {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+
 

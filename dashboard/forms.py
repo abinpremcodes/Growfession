@@ -1,7 +1,7 @@
 
 from django import forms
 
-from .models import Project
+from .models import Project, Task
 
 
 class ProjectForm(forms.ModelForm):
@@ -40,5 +40,38 @@ class ProjectForm(forms.ModelForm):
 
             "github_url": forms.URLInput(attrs={
                 "placeholder": "https://github.com/username/project",
+            }),
+        }
+
+
+class TaskForm(forms.ModelForm):
+
+    class Meta:
+        model = Task
+
+        fields = [
+            "title",
+            "description",
+            "priority",
+            "status",
+            "due_date",
+        ]
+
+        widgets = {
+            "title": forms.TextInput(attrs={
+                "placeholder": "Enter your task title",
+            }),
+
+            "description": forms.Textarea(attrs={
+                "placeholder": "Describe what you need to do",
+                "rows": 4,
+            }),
+
+            "priority": forms.Select(),
+
+            "status": forms.Select(),
+
+            "due_date": forms.DateInput(attrs={
+                "type": "date",
             }),
         }

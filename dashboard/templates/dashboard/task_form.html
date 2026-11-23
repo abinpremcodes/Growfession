@@ -1,0 +1,184 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if task %}Edit Task{% else %}Create Task{% endif %} | Growfession
+    </title>
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+</head>
+
+<body class="project-list-page">
+
+    <div class="dashboard-layout">
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <p class="topbar-label">DEVELOPER WORKSPACE</p>
+
+                    <h3>
+                        {% if task %}Edit Task{% else %}Create New Task{% endif %}
+                    </h3>
+                </div>
+
+                <a href="{% url 'task_list' %}" class="back-dashboard-btn">
+                    Back to Tasks
+                </a>
+
+            </header>
+
+            <section class="project-hero">
+
+                <div>
+                    <p class="section-label">PLAN YOUR PROGRESS</p>
+
+                    <h1>
+                        {% if task %}
+                            Update Your Task.
+                        {% else %}
+                            What's Next?
+                        {% endif %}
+                    </h1>
+
+                    <p>
+                        Break your goals into manageable tasks and keep
+                        moving forward with your developer journey.
+                    </p>
+                </div>
+
+            </section>
+
+            <section class="content-section">
+
+                <div class="project-form-container">
+
+                    <div class="project-section-heading">
+                        <div>
+                            <p class="section-label">TASK DETAILS</p>
+                            <h2>
+                                {% if task %}Edit Task Details{% else %}Task Information{% endif %}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <form method="POST" class="project-form">
+
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="form-errors">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-field">
+
+                            <label for="{{ form.title.id_for_label }}">
+                                Task Title
+                            </label>
+
+                            {{ form.title }}
+
+                            {% for error in form.title.errors %}
+                                <span class="field-error">{{ error }}</span>
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="form-field">
+
+                            <label for="{{ form.description.id_for_label }}">
+                                Description
+                            </label>
+
+                            {{ form.description }}
+
+                            {% for error in form.description.errors %}
+                                <span class="field-error">{{ error }}</span>
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="task-form-row">
+
+                            <div class="form-field">
+
+                                <label for="{{ form.priority.id_for_label }}">
+                                    Priority
+                                </label>
+
+                                {{ form.priority }}
+
+                                {% for error in form.priority.errors %}
+                                    <span class="field-error">{{ error }}</span>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="form-field">
+
+                                <label for="{{ form.status.id_for_label }}">
+                                    Status
+                                </label>
+
+                                {{ form.status }}
+
+                                {% for error in form.status.errors %}
+                                    <span class="field-error">{{ error }}</span>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-field">
+
+                            <label for="{{ form.due_date.id_for_label }}">
+                                Due Date
+                            </label>
+
+                            {{ form.due_date }}
+
+                            {% for error in form.due_date.errors %}
+                                <span class="field-error">{{ error }}</span>
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="project-form-actions">
+
+                            <a href="{% url 'task_list' %}" class="cancel-project-btn">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="add-project-btn">
+                                {% if task %}Save Changes{% else %}Create Task{% endif %}
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+            <footer class="dashboard-footer">
+                <p>Growfession © 2026. Build your future, one step at a time.</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
