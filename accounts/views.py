@@ -1,5 +1,5 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 
 from .forms import RegistrationForm, DeveloperProfileForm
-from .models import DeveloperProfile
+from .models import DeveloperProfile, User
 
 
 def register_view(request):
@@ -102,4 +102,35 @@ def developer_profile_view(request):
         request,
         "accounts/developer_profile.html",
         {"form": form, "profile": profile},
+    )
+
+
+def public_developer_profile_view(request, username):
+
+    developer = get_object_or_404(
+        User,
+        username=username,
+        role="DEVELOPER",
+    )
+
+    profile = get_object_or_404(
+        DeveloperProfile,
+        user=developer,
+        is_public=True,
+    )
+
+    skills = [
+        skill.strip()
+        for skill in profile.skills.split(",")
+        if skill.strip()
+    ]
+
+    return render(
+        request,
+        "accounts/public_developer_profile.html",
+        {
+            "developer": developer,
+            "profile": profile,
+            "skills": skills,
+        },
     )

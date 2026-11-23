@@ -1,0 +1,274 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ developer.username }} | Growfession</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            color: #263b36;
+            padding: 35px 16px;
+        }
+
+        .profile-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .profile-card {
+            background: white;
+            border: 1px solid #e8eeea;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: #176b5b;
+            height: 150px;
+        }
+
+        .profile-content {
+            padding: 0 35px 35px;
+        }
+
+        .profile-picture {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            margin-top: -65px;
+            background: #e5f2ed;
+        }
+
+        .profile-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            color: #176b5b;
+        }
+
+        .developer-name {
+            font-size: 28px;
+            margin-top: 15px;
+        }
+
+        .headline {
+            color: #176b5b;
+            margin-top: 7px;
+            font-size: 16px;
+        }
+
+        .location {
+            color: #7b8984;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .profile-section {
+            margin-top: 32px;
+        }
+
+        .profile-section h2 {
+            font-size: 19px;
+            color: #176b5b;
+            margin-bottom: 13px;
+        }
+
+        .profile-section p {
+            color: #596b64;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill {
+            background: #e5f2ed;
+            color: #176b5b;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            text-decoration: none;
+            background: #176b5b;
+            color: white;
+            padding: 10px 17px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .social-links a:hover {
+            background: #123c35;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #7b8984;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px 12px;
+            }
+
+            .profile-content {
+                padding: 0 20px 25px;
+            }
+
+            .profile-header {
+                height: 115px;
+            }
+
+            .profile-picture {
+                width: 105px;
+                height: 105px;
+                margin-top: -55px;
+            }
+
+            .developer-name {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <div class="profile-header"></div>
+
+        <div class="profile-content">
+
+            {% if profile.profile_picture %}
+                <img
+                    src="{{ profile.profile_picture.url }}"
+                    alt="{{ developer.username }}'s profile picture"
+                    class="profile-picture"
+                >
+            {% else %}
+                <div class="profile-picture profile-placeholder">
+                    {{ developer.username|first|upper }}
+                </div>
+            {% endif %}
+
+            <h1 class="developer-name">
+                {{ developer.username }}
+            </h1>
+
+            {% if profile.headline %}
+                <p class="headline">{{ profile.headline }}</p>
+            {% endif %}
+
+            {% if profile.location %}
+                <p class="location">📍 {{ profile.location }}</p>
+            {% endif %}
+
+            {% if profile.bio %}
+                <div class="profile-section">
+                    <h2>About Me</h2>
+                    <p>{{ profile.bio }}</p>
+                </div>
+            {% endif %}
+
+            {% if skills %}
+    <div class="profile-section">
+        <h2>Skills</h2>
+
+        <div class="skills-list">
+            {% for skill in skills %}
+                <span class="skill">
+                    {{ skill }}
+                </span>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+            {% if profile.education %}
+                <div class="profile-section">
+                    <h2>Education</h2>
+                    <p>{{ profile.education }}</p>
+                </div>
+            {% endif %}
+
+            {% if profile.experience %}
+                <div class="profile-section">
+                    <h2>Experience</h2>
+                    <p>{{ profile.experience }}</p>
+                </div>
+            {% endif %}
+
+            {% if profile.github_url or profile.linkedin_url or profile.portfolio_url %}
+                <div class="profile-section">
+                    <h2>Connect With Me</h2>
+
+                    <div class="social-links">
+
+                        {% if profile.github_url %}
+                            <a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer">
+                                GitHub
+                            </a>
+                        {% endif %}
+
+                        {% if profile.linkedin_url %}
+                            <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">
+                                LinkedIn
+                            </a>
+                        {% endif %}
+
+                        {% if profile.portfolio_url %}
+                            <a href="{{ profile.portfolio_url }}" target="_blank" rel="noopener noreferrer">
+                                Portfolio
+                            </a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Powered by Growfession
+    </div>
+
+</div>
+
+</body>
+</html>
