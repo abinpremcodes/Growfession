@@ -1,0 +1,315 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Developer Profile | Growfession</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            color: #263b36;
+            padding: 30px 16px;
+        }
+
+        .profile-container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #7b8984;
+            line-height: 1.6;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            border: 1px solid #e8eeea;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            font-size: 18px;
+            margin-bottom: 18px;
+            color: #176b5b;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dce5df;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #176b5b;
+            box-shadow: 0 0 0 3px rgba(23, 107, 91, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 6px;
+            color: #7b8984;
+        }
+
+        .profile-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 3px solid #e5f2ed;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+        }
+
+        .save-button {
+            background: #176b5b;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .save-button:hover {
+            background: #123c35;
+        }
+
+        .error-list {
+            color: #c0392b;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+
+        .messages {
+            margin-bottom: 18px;
+            padding: 12px 15px;
+            background: #e5f2ed;
+            color: #176b5b;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px 12px;
+            }
+
+            .profile-card {
+                padding: 20px 16px;
+            }
+
+            .page-header h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="profile-container">
+
+    <div class="page-header">
+        <h1>Build Your Developer Profile</h1>
+        <p>
+            Tell the Growfession community about yourself, your skills,
+            and your development journey.
+        </p>
+    </div>
+
+    <div class="profile-card">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messages">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="error-list">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-section">
+                <h2>Basic Information</h2>
+
+                <div class="form-group">
+                    <label>Profile Picture</label>
+
+                    {% if profile.profile_picture %}
+                        <img
+                            src="{{ profile.profile_picture.url }}"
+                            alt="Profile picture"
+                            class="profile-preview"
+                        >
+                    {% endif %}
+
+                    {{ form.profile_picture }}
+                    {{ form.profile_picture.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label>Professional Headline</label>
+                    {{ form.headline }}
+                    {{ form.headline.errors }}
+                    <small>Example: Python & Django Developer</small>
+                </div>
+
+                <div class="form-group">
+                    <label>About Me</label>
+                    {{ form.bio }}
+                    {{ form.bio.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    {{ form.location }}
+                    {{ form.location.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    {{ form.phone }}
+                    {{ form.phone.errors }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Professional Details</h2>
+
+                <div class="form-group">
+                    <label>Skills</label>
+                    {{ form.skills }}
+                    {{ form.skills.errors }}
+                    <small>Separate your skills using commas.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Education</label>
+                    {{ form.education }}
+                    {{ form.education.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label>Experience</label>
+                    {{ form.experience }}
+                    {{ form.experience.errors }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Social Links</h2>
+
+                <div class="form-group">
+                    <label>GitHub URL</label>
+                    {{ form.github_url }}
+                    {{ form.github_url.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label>LinkedIn URL</label>
+                    {{ form.linkedin_url }}
+                    {{ form.linkedin_url.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label>Portfolio URL</label>
+                    {{ form.portfolio_url }}
+                    {{ form.portfolio_url.errors }}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Profile Visibility</h2>
+
+                <div class="checkbox-group">
+                    {{ form.is_public }}
+                    <label for="{{ form.is_public.id_for_label }}">
+                        Make my profile visible to recruiters
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="save-button">
+                Save Profile
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

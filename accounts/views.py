@@ -3,8 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, DeveloperProfileForm
+from .models import DeveloperProfile
 
 
 def register_view(request):
@@ -58,4 +61,45 @@ def login_view(request):
         request,
         "accounts/login.html",
         {"form": form},
+    )
+
+
+@login_required
+def developer_profile_view(request):
+
+    if request.user.role != "DEVELOPER":
+        return HttpResponseForbidden(
+            "Only developer accounts can access this page."
+        )
+
+    profile, created = DeveloperProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    if request.method == "POST":
+        form = DeveloperProfileForm(
+            request.POST,
+            request.FILES,
+            instance=profile
+        )
+
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+
+            messages.success(
+                request,
+                "Your developer profile has been saved successfully!"
+            )
+
+            return redirect("developer_profile")
+
+    else:
+        form = DeveloperProfileForm(instance=profile)
+
+    return render(
+        request,
+        "accounts/developer_profile.html",
+        {"form": form, "profile": profile},
     )
