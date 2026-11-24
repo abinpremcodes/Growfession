@@ -1,0 +1,252 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Learning Goals | Growfession</title>
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+</head>
+
+<body class="project-list-page">
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <h2>Growfession<span>.</span></h2>
+                <p>Developer Platform</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <p class="nav-heading">WORKSPACE</p>
+
+                <a href="{% url 'developer_dashboard' %}" class="nav-link">
+                    Dashboard
+                </a>
+
+                <a href="{% url 'project_list' %}" class="nav-link">
+                    My Projects
+                </a>
+
+                <a href="{% url 'task_list' %}" class="nav-link">
+                    My Tasks
+                </a>
+
+                <a href="{% url 'learning_goal_list' %}" class="nav-link active">
+                    Learning Goals
+                </a>
+
+                <p class="nav-heading">CAREER</p>
+
+                <a href="#" class="nav-link">Find Jobs</a>
+                <a href="#" class="nav-link">My Applications</a>
+                <a href="#" class="nav-link">GitHub Integration</a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <p>Build your future, one step at a time.</p>
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Topbar -->
+            <header class="topbar">
+
+                <div>
+                    <p class="topbar-label">DEVELOPER WORKSPACE</p>
+                    <h3>Learning Goals</h3>
+                </div>
+
+                <div class="user-profile">
+
+                    <div class="user-avatar">
+                        {{ request.user.username|first|upper }}
+                    </div>
+
+                    <div class="user-details">
+                        <strong>{{ request.user.username }}</strong>
+                        <span>Developer</span>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- Hero Section -->
+            <section class="project-hero">
+
+                <div>
+                    <p class="section-label">YOUR LEARNING JOURNEY</p>
+
+                    <h1>My Learning Goals</h1>
+
+                    <p>
+                        Set meaningful learning targets, develop new skills,
+                        and keep track of your progress as you grow.
+                    </p>
+                </div>
+
+                <a href="{% url 'learning_goal_create' %}" class="add-project-btn">
+                    + Create New Goal
+                </a>
+
+            </section>
+
+
+            <!-- Goals Section -->
+            <section class="content-section">
+
+                <div class="project-section-heading">
+
+                    <div>
+                        <p class="section-label">PERSONAL DEVELOPMENT</p>
+                        <h2>Your Learning Progress</h2>
+                    </div>
+
+                    <span class="project-count">
+                        {{ goals|length }} Goals
+                    </span>
+
+                </div>
+
+
+                <div class="project-grid">
+
+                    {% for goal in goals %}
+
+                        <article class="project-card goal-card">
+
+                            <div class="project-card-top">
+
+                                <span class="project-number">
+                                    LEARNING GOAL
+                                </span>
+
+                                <span class="project-status status_{{ goal.status|lower }}">
+                                    {{ goal.get_status_display }}
+                                </span>
+
+                            </div>
+
+
+                            <h3>{{ goal.title }}</h3>
+
+                            <p class="project-description">
+                                {{ goal.description|default:"No description added yet." }}
+                            </p>
+
+
+                            <!-- Progress -->
+                            <div class="goal-progress-section">
+
+                                <div class="goal-progress-heading">
+                                    <span>Overall Progress</span>
+                                    <strong>{{ goal.progress }}%</strong>
+                                </div>
+
+                                <div class="goal-progress-track">
+
+                                    <div
+                                        class="goal-progress-fill"
+                                        style="width: {{ goal.progress }}%;">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Target Date -->
+                            <div class="goal-target-date">
+
+                                <span>Target Date</span>
+
+                                <strong>
+                                    {% if goal.target_date %}
+                                        {{ goal.target_date|date:"d M Y" }}
+                                    {% else %}
+                                        Not set
+                                    {% endif %}
+                                </strong>
+
+                            </div>
+
+
+                            <!-- Goal Actions -->
+                            <div class="project-card-actions">
+
+                                <a href="{% url 'learning_goal_edit' goal.id %}"
+                                   class="edit-project-btn">
+                                    Edit
+                                </a>
+
+                                <form method="POST"
+                                      action="{% url 'learning_goal_delete' goal.id %}"
+                                      onsubmit="return confirm('Are you sure you want to delete this learning goal?');">
+
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="delete-project-btn">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </article>
+
+                    {% empty %}
+
+                        <div class="project-empty-state">
+
+                            <div class="empty-project-icon">
+                                01
+                            </div>
+
+                            <h3>No Learning Goals Yet</h3>
+
+                            <p>
+                                Your learning journey starts with one goal.
+                                Create your first learning goal and start
+                                tracking your progress.
+                            </p>
+
+                            <a href="{% url 'learning_goal_create' %}" class="add-project-btn">
+                                + Create Your First Goal
+                            </a>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <p>Growfession © 2026. Build your future, one step at a time.</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

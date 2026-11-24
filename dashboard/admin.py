@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Project, Task
+from .models import Project, Task, LearningGoal
 
 
 @admin.register(Project)
@@ -35,3 +35,29 @@ class TaskAdmin(admin.ModelAdmin):
     )
 
     ordering = ("due_date", "-created_at")
+
+
+@admin.register(LearningGoal)
+class LearningGoalAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "user",
+        "progress",
+        "status",
+        "target_date",
+        "created_at",
+    )
+
+    list_filter = (
+        "status",
+        "target_date",
+        "created_at",
+    )
+
+    search_fields = (
+        "title",
+        "description",
+        "user__username",
+    )
+
+    ordering = ("target_date", "-created_at")

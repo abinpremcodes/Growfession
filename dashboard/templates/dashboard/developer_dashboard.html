@@ -40,7 +40,7 @@
                     My Tasks
                 </a>
 
-                <a href="#" class="nav-link">
+                <a href="{% url 'learning_goal_list' %}" class="nav-link">
                     Learning Goals
                 </a>
 
@@ -79,6 +79,7 @@
                 </div>
 
                 <div class="user-profile">
+
                     <div class="user-avatar">
                         {{ request.user.username|first|upper }}
                     </div>
@@ -87,6 +88,7 @@
                         <strong>{{ request.user.username }}</strong>
                         <span>Developer</span>
                     </div>
+
                 </div>
 
             </header>
@@ -170,14 +172,14 @@
                     </a>
 
 
-                    <!-- Learning -->
-                    <a href="#" class="feature-card">
+                    <!-- Learning Goals -->
+                    <a href="{% url 'learning_goal_list' %}" class="feature-card">
 
                         <div class="feature-icon">03</div>
 
-                        <div class="feature-status">Coming Soon</div>
+                        <div class="feature-status">Available</div>
 
-                        <h3>Learning Goals</h3>
+                        <h3>Learning Tracker</h3>
 
                         <p>
                             Set learning goals, improve your technical skills,

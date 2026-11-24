@@ -18,4 +18,15 @@ urlpatterns = [
     path("tasks/create/", views.task_create, name="task_create"),
     path("tasks/<int:task_id>/edit/", views.task_edit, name="task_edit"),
     path("tasks/<int:task_id>/delete/", views.task_delete, name="task_delete"),
+
+    #Learning goals URLs
+    path("learning-goals/",views.learning_goal_list,  name="learning_goal_list"),
+    path("learning-goals/create/",views.learning_goal_create, name="learning_goal_create"),
+    path("learning-goals/<int:goal_id>/edit/", views.learning_goal_edit, name="learning_goal_edit"),
+    path("learning-goals/<int:goal_id>/delete/", views.learning_goal_delete, name="learning_goal_delete"),
+
+
+        
+       
+
 ]

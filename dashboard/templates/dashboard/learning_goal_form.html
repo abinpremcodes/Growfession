@@ -1,0 +1,275 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if form.instance.pk %}
+            Edit Learning Goal | Growfession
+        {% else %}
+            Create Learning Goal | Growfession
+        {% endif %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+</head>
+
+<body class="project-list-page">
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <h2>Growfession<span>.</span></h2>
+                <p>Developer Platform</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <p class="nav-heading">WORKSPACE</p>
+
+                <a href="{% url 'developer_dashboard' %}" class="nav-link">
+                    Dashboard
+                </a>
+
+                <a href="{% url 'project_list' %}" class="nav-link">
+                    My Projects
+                </a>
+
+                <a href="{% url 'task_list' %}" class="nav-link">
+                    My Tasks
+                </a>
+
+                <a href="{% url 'learning_goal_list' %}" class="nav-link active">
+                    Learning Goals
+                </a>
+
+                <p class="nav-heading">CAREER</p>
+
+                <a href="#" class="nav-link">Find Jobs</a>
+                <a href="#" class="nav-link">My Applications</a>
+                <a href="#" class="nav-link">GitHub Integration</a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <p>Build your future, one step at a time.</p>
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Topbar -->
+            <header class="topbar">
+
+                <div>
+                    <p class="topbar-label">DEVELOPER WORKSPACE</p>
+                    <h3>Learning Goals</h3>
+                </div>
+
+                <div class="user-profile">
+
+                    <div class="user-avatar">
+                        {{ request.user.username|first|upper }}
+                    </div>
+
+                    <div class="user-details">
+                        <strong>{{ request.user.username }}</strong>
+                        <span>Developer</span>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- Hero Section -->
+            <section class="project-hero">
+
+                <div>
+                    <p class="section-label">PERSONAL DEVELOPMENT</p>
+
+                    <h1>
+                        {% if form.instance.pk %}
+                            Update Your Goal
+                        {% else %}
+                            Set a New Learning Goal
+                        {% endif %}
+                    </h1>
+
+                    <p>
+                        Every skill you learn takes you one step closer
+                        to becoming a better developer.
+                    </p>
+                </div>
+
+                <a href="{% url 'learning_goal_list' %}" class="cancel-project-btn">
+                    Back to Goals
+                </a>
+
+            </section>
+
+
+            <!-- Form Section -->
+            <section class="content-section">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">YOUR NEXT MILESTONE</p>
+                        <h2>Goal Details</h2>
+
+                        <p class="section-description">
+                            Define what you want to learn and how far you've progressed.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Learning Goal Form -->
+                <div class="project-form-container">
+
+                    <form method="POST" class="project-form">
+
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="form-errors">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+
+                        <!-- Goal Title -->
+                        <div class="form-field">
+
+                            <label for="{{ form.title.id_for_label }}">
+                                Goal Title
+                            </label>
+
+                            {{ form.title }}
+
+                            {% if form.title.errors %}
+                                <div class="field-error">
+                                    {{ form.title.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Description -->
+                        <div class="form-field">
+
+                            <label for="{{ form.description.id_for_label }}">
+                                Description
+                            </label>
+
+                            {{ form.description }}
+
+                            {% if form.description.errors %}
+                                <div class="field-error">
+                                    {{ form.description.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Target Date -->
+                        <div class="form-field">
+
+                            <label for="{{ form.target_date.id_for_label }}">
+                                Target Date
+                            </label>
+
+                            {{ form.target_date }}
+
+                            {% if form.target_date.errors %}
+                                <div class="field-error">
+                                    {{ form.target_date.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Progress -->
+                        <div class="form-field">
+
+                            <label for="{{ form.progress.id_for_label }}">
+                                Progress Percentage
+                            </label>
+
+                            {{ form.progress }}
+
+                            {% if form.progress.errors %}
+                                <div class="field-error">
+                                    {{ form.progress.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Status -->
+                        <div class="form-field">
+
+                            <label for="{{ form.status.id_for_label }}">
+                                Current Status
+                            </label>
+
+                            {{ form.status }}
+
+                            {% if form.status.errors %}
+                                <div class="field-error">
+                                    {{ form.status.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Form Actions -->
+                        <div class="project-form-actions">
+
+                            <button type="submit" class="add-project-btn">
+                                {% if form.instance.pk %}
+                                    Update Learning Goal
+                                {% else %}
+                                    Save Learning Goal
+                                {% endif %}
+                            </button>
+
+                            <a href="{% url 'learning_goal_list' %}" class="cancel-project-btn">
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <p>Growfession © 2026. Build your future, one step at a time.</p>
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

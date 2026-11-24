@@ -2,8 +2,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .models import Project, Task
-from .forms import ProjectForm, TaskForm
+from .models import Project, Task,LearningGoal
+from .forms import ProjectForm, TaskForm,LearningGoalForm
 
 
 @login_required
@@ -179,3 +179,86 @@ def task_delete(request, task_id):
         task.delete()
 
     return redirect("task_list")
+
+
+
+@login_required
+def learning_goal_list(request):
+
+    goals=LearningGoal.objects.filter(user=request.user)
+
+    return render(
+        request,"dashboard/learning_goal_list.html",
+        {"goals":goals}
+    )
+
+@login_required
+def learning_goal_create(request):
+
+    if request.method=='POST':
+        form=LearningGoalForm(request.POST)
+
+        if form.is_valid():
+           goal=form.save(commit=False)
+           goal.user=request.user
+           goal.save()
+
+           return redirect("learning_goal_list")
+
+    else:
+        form=LearningGoalForm()
+
+    return render(
+        request,"dashboard/learning_goal_form.html",
+        {"form":form}
+
+
+        )
+
+
+@login_required
+def learning_goal_edit(request, goal_id):
+
+    goal = get_object_or_404(
+        LearningGoal,
+        id=goal_id,
+        user=request.user
+    )
+
+    if request.method == "POST":
+        form = LearningGoalForm(request.POST, instance=goal)
+
+        if form.is_valid():
+            form.save()
+            return redirect("learning_goal_list")
+
+    else:
+        form = LearningGoalForm(instance=goal)
+
+    return render(
+        request,
+        "dashboard/learning_goal_form.html",
+        {
+            "form": form,
+            "goal": goal
+        }
+    )
+
+
+@login_required
+def learning_goal_delete(request, goal_id):
+
+    goal = get_object_or_404(
+        LearningGoal,
+        id=goal_id,
+        user=request.user
+    )
+
+    if request.method == "POST":
+        goal.delete()
+
+    return redirect("learning_goal_list")
+
+
+
+

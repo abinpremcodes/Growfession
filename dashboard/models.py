@@ -1,37 +1,41 @@
+
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+
 class Project(models.Model):
 
     class Status(models.TextChoices):
-        NOT_STARTED="NOT_STARTED","Not Started"
-        IN_PROGRESS="IN_PROGRESS","In Progress"
-        COMPLETED="COMPLETED","Completed"
+        NOT_STARTED = "NOT_STARTED", "Not Started"
+        IN_PROGRESS = "IN_PROGRESS", "In Progress"
+        COMPLETED = "COMPLETED", "Completed"
 
-    user=models.ForeignKey(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="projects"
-    
     )
 
-    title=models.CharField(max_length=150)
+    title = models.CharField(max_length=150)
 
-    description=models.TextField()
+    description = models.TextField()
 
-    tech_stack=models.CharField(max_length=255)
+    tech_stack = models.CharField(max_length=255)
 
-    status=models.CharField(
+    status = models.CharField(
         max_length=20,
         choices=Status.choices,
-        default=Status.NOT_STARTED)
+        default=Status.NOT_STARTED
+    )
 
-    live_url=models.URLField(blank=True)
+    live_url = models.URLField(blank=True)
 
-    github_url=models.URLField(blank=True)
+    github_url = models.URLField(blank=True)
 
-    created_at=models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    updated_at=models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-updated_at"]
@@ -87,10 +91,45 @@ class Task(models.Model):
         return self.title
 
 
+class LearningGoal(models.Model):
 
+    class Status(models.TextChoices):
+        NOT_STARTED = "NOT_STARTED", "Not Started"
+        IN_PROGRESS = "IN_PROGRESS", "In Progress"
+        COMPLETED = "COMPLETED", "Completed"
 
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="learning_goals",
+    )
 
+    title = models.CharField(max_length=150)
 
+    description = models.TextField(blank=True)
 
+    target_date = models.DateField(blank=True, null=True)
 
+    progress = models.PositiveSmallIntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ],
+    )
 
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.NOT_STARTED,
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["target_date", "-created_at"]
+
+    def __str__(self):
+        return self.title

@@ -1,7 +1,7 @@
 
 from django import forms
 
-from .models import Project, Task
+from .models import Project, Task, LearningGoal
 
 
 class ProjectForm(forms.ModelForm):
@@ -74,4 +74,41 @@ class TaskForm(forms.ModelForm):
             "due_date": forms.DateInput(attrs={
                 "type": "date",
             }),
+        }
+
+
+class LearningGoalForm(forms.ModelForm):
+
+    class Meta:
+        model = LearningGoal
+
+        fields = [
+            "title",
+            "description",
+            "target_date",
+            "progress",
+            "status",
+        ]
+
+        widgets = {
+            "title": forms.TextInput(attrs={
+                "placeholder": "e.g. Learn Django REST Framework",
+            }),
+
+            "description": forms.Textarea(attrs={
+                "placeholder": "Describe what you want to learn",
+                "rows": 4,
+            }),
+
+            "target_date": forms.DateInput(attrs={
+                "type": "date",
+            }),
+
+            "progress": forms.NumberInput(attrs={
+                "min": 0,
+                "max": 100,
+                "placeholder": "0 - 100",
+            }),
+
+            "status": forms.Select(),
         }
