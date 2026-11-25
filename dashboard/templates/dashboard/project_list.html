@@ -10,9 +10,12 @@
     <title>My Projects | Growfession</title>
 
     <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/toast.css' %}">
 </head>
 
 <body class="project-list-page">
+
+    {% include 'includes/_toast_messages.html' %}
 
     <div class="dashboard-layout">
 
@@ -176,6 +179,7 @@
 
     </div>
 
+
     <!-- DELETE CONFIRMATION MODAL -->
 
     <div class="delete-modal-overlay"
@@ -193,7 +197,9 @@
                 <span>!</span>
             </div>
 
-            <h2 id="deleteModalTitle">Delete this project?</h2>
+            <h2 id="deleteModalTitle">
+                Delete this project?
+            </h2>
 
             <p>
                 Are you sure you want to delete this project?
@@ -203,14 +209,14 @@
             <div class="delete-modal-actions">
 
                 <button type="button"
-                        class="cancel-delete-btn"
-                        id="cancelDelete">
+                        id="cancelDelete"
+                        class="cancel-delete-btn">
                     Cancel
                 </button>
 
                 <button type="button"
-                        class="confirm-delete-btn"
-                        id="confirmDelete">
+                        id="confirmDelete"
+                        class="confirm-delete-btn">
                     Yes, Delete
                 </button>
 
@@ -220,9 +226,11 @@
 
     </div>
 
-    <!-- SHARED MODAL JAVASCRIPT -->
+
+    <!-- JAVASCRIPT -->
 
     <script src="{% static 'dashboard/js/modal.js' %}" defer></script>
+    <script src="{% static 'dashboard/js/toast.js' %}" defer></script>
 
 </body>
 </html>

@@ -32,6 +32,7 @@ def register_view(request):
     )
 
 
+
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -48,11 +49,22 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
+
                 messages.success(
                     request,
                     "Welcome back to Growfession!"
                 )
-                return redirect("register")
+
+                if user.role == "DEVELOPER":
+                    return redirect("developer_dashboard")
+
+                elif user.role == "RECRUITER":
+                    return redirect("recruiter_dashboard")
+
+                elif user.role == "MENTOR":
+                    return redirect("mentor_dashboard")
+
+                return redirect("login")
 
     else:
         form = AuthenticationForm()
@@ -62,6 +74,7 @@ def login_view(request):
         "accounts/login.html",
         {"form": form},
     )
+
 
 
 @login_required

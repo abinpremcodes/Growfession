@@ -10,9 +10,12 @@
     <title>Developer Dashboard | Growfession</title>
 
     <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/toast.css' %}">
 </head>
 
 <body>
+
+    {% include 'includes/_toast_messages.html' %}
 
     <div class="dashboard-layout">
 
@@ -284,6 +287,8 @@
         </main>
 
     </div>
+
+    <script src="{% static 'dashboard/js/toast.js' %}" defer></script>
 
 </body>
 </html>

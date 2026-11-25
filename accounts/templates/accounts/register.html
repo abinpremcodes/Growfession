@@ -17,7 +17,55 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'accounts/css/register.css' %}">
+
+    <!-- Toast Notification CSS -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/toast.css' %}">
+
+    <!-- Password Visibility Styling -->
+    <style>
+        .password-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-input-wrapper input {
+            width: 100%;
+            padding-right: 48px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 14px;
+            transform: translateY(-50%);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 5px;
+            border: none;
+            background: transparent;
+            color: #84968d;
+
+            cursor: pointer;
+        }
+
+        .password-toggle:hover {
+            color: #299879;
+        }
+
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .password-toggle .hidden {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
 
     <main class="register-page">
@@ -68,14 +116,8 @@
                 </div>
 
 
-                <!-- Success Messages -->
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-success" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                <!-- Shared Toast Notifications -->
+                {% include 'includes/_toast_messages.html' %}
 
 
                 <!-- Registration Form -->
@@ -91,7 +133,61 @@
                                 {{ field.label }}
                             </label>
 
-                            {{ field }}
+                            {% if field.field.widget.input_type == 'password' %}
+
+                                <div class="password-input-wrapper">
+
+                                    {{ field }}
+
+                                    <button
+                                        type="button"
+                                        class="password-toggle"
+                                        aria-label="Show password"
+                                        aria-pressed="false"
+                                    >
+
+                                        <!-- Eye Icon -->
+                                        <svg
+                                            class="eye-icon"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+
+                                        <!-- Eye Off Icon -->
+                                        <svg
+                                            class="eye-off-icon hidden"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M3 3l18 18"/>
+                                            <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                                            <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a15.5 15.5 0 0 1-3.1 3.9"/>
+                                            <path d="M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7c1.2 0 2.3-.2 3.3-.6"/>
+                                        </svg>
+
+                                    </button>
+
+                                </div>
+
+                            {% else %}
+
+                                {{ field }}
+
+                            {% endif %}
+
 
                             {% if field.help_text %}
                                 <small class="field-help">
@@ -148,6 +244,58 @@
 
     <!-- Custom JavaScript -->
     <script src="{% static 'accounts/js/register.js' %}"></script>
+
+    <!-- Toast Notification JavaScript -->
+    <script src="{% static 'dashboard/js/toast.js' %}" defer></script>
+
+    <!-- Password Visibility JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const passwordWrappers = document.querySelectorAll(
+                ".password-input-wrapper"
+            );
+
+            passwordWrappers.forEach(function (wrapper) {
+
+                const passwordInput = wrapper.querySelector("input");
+                const toggleButton = wrapper.querySelector(".password-toggle");
+
+                const eyeIcon = wrapper.querySelector(".eye-icon");
+                const eyeOffIcon = wrapper.querySelector(".eye-off-icon");
+
+                if (!passwordInput || !toggleButton) {
+                    return;
+                }
+
+                toggleButton.addEventListener("click", function () {
+
+                    const isPasswordHidden =
+                        passwordInput.type === "password";
+
+                    passwordInput.type = isPasswordHidden
+                        ? "text"
+                        : "password";
+
+                    eyeIcon.classList.toggle("hidden", isPasswordHidden);
+                    eyeOffIcon.classList.toggle("hidden", !isPasswordHidden);
+
+                    toggleButton.setAttribute(
+                        "aria-label",
+                        isPasswordHidden ? "Hide password" : "Show password"
+                    );
+
+                    toggleButton.setAttribute(
+                        "aria-pressed",
+                        isPasswordHidden ? "true" : "false"
+                    );
+
+                });
+
+            });
+
+        });
+    </script>
 
 </body>
 </html>
