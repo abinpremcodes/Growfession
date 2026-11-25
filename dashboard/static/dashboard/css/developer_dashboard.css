@@ -1850,5 +1850,131 @@ body {
 
 
 
+/* =========================================
+   GROWFESSION DELETE MODAL - JS INTEGRATION
+========================================= */
+
+/* Show modal when JavaScript opens it */
+.delete-modal-overlay:not([hidden]) {
+    display: flex;
+}
+
+/* Prevent background scrolling */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Cancel button */
+.delete-modal-cancel {
+    flex: 1;
+    min-height: 46px;
+    padding: 12px 18px;
+    background: #f0f5f1;
+    color: #263b36;
+    border: 1px solid #e0e9e2;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-modal-cancel:hover {
+    background: #e5eee7;
+}
+
+/* Confirm delete button */
+.delete-modal-confirm {
+    flex: 1;
+    min-height: 46px;
+    padding: 12px 18px;
+    background: #a83232;
+    color: #ffffff;
+    border: 1px solid #a83232;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-modal-confirm:hover {
+    background: #8e2525;
+    transform: translateY(-2px);
+}
+
+.delete-modal-confirm:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Keyboard accessibility */
+.delete-modal-cancel:focus-visible,
+.delete-modal-confirm:focus-visible {
+    outline: 3px solid #70d6b5;
+    outline-offset: 3px;
+}
+
+/* Mobile layout */
+@media (max-width: 480px) {
+    .delete-modal {
+        max-width: 100%;
+        padding: 28px 20px;
+    }
+
+    .delete-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .delete-modal-cancel,
+    .delete-modal-confirm {
+        width: 100%;
+        min-height: 46px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .delete-modal {
+        animation: none;
+    }
+
+    .delete-modal-cancel,
+    .delete-modal-confirm {
+        transition: none;
+    }
+}
+
+
+/* =========================================
+   DELETE MODAL VISIBILITY FIX
+========================================= */
+
+/* Hidden modal must never block page interactions */
+.delete-modal-overlay[hidden] {
+    display: none !important;
+}
+
+/* Show modal only when JavaScript opens it */
+.delete-modal-overlay:not([hidden]) {
+    display: flex !important;
+}
+
+/* Keep the modal above dashboard content */
+.delete-modal-overlay {
+    z-index: 10000;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+
+
+
 
 

@@ -170,15 +170,22 @@
 
     <!-- DELETE CONFIRMATION MODAL -->
 
-    <div class="delete-modal-overlay" id="deleteModal">
+    <div class="delete-modal-overlay"
+         id="deleteModal"
+         hidden
+         aria-hidden="true">
 
-        <div class="delete-modal">
+        <div class="delete-modal"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="deleteModalTitle"
+             tabindex="-1">
 
             <div class="delete-modal-icon">
                 <span>!</span>
             </div>
 
-            <h2>Delete this task?</h2>
+            <h2 id="deleteModalTitle">Delete this task?</h2>
 
             <p>
                 Are you sure you want to delete this task?
@@ -187,11 +194,15 @@
 
             <div class="delete-modal-actions">
 
-                <button type="button" class="cancel-delete-btn" id="cancelDelete">
+                <button type="button"
+                        class="cancel-delete-btn"
+                        id="cancelDelete">
                     Cancel
                 </button>
 
-                <button type="button" class="confirm-delete-btn" id="confirmDelete">
+                <button type="button"
+                        class="confirm-delete-btn"
+                        id="confirmDelete">
                     Yes, Delete
                 </button>
 
@@ -202,44 +213,104 @@
     </div>
 
     <script>
-        const deleteModal = document.getElementById("deleteModal");
-        const cancelDelete = document.getElementById("cancelDelete");
-        const confirmDelete = document.getElementById("confirmDelete");
+        document.addEventListener("DOMContentLoaded", function () {
 
-        let selectedDeleteForm = null;
+            const deleteModal = document.getElementById("deleteModal");
+            const modalDialog = deleteModal.querySelector(".delete-modal");
 
-        document.querySelectorAll(".delete-task-trigger").forEach(button => {
+            const cancelDelete = document.getElementById("cancelDelete");
+            const confirmDelete = document.getElementById("confirmDelete");
 
-            button.addEventListener("click", function () {
-                selectedDeleteForm = this.closest("form");
+            const deleteButtons = document.querySelectorAll(".delete-task-trigger");
+
+            let selectedDeleteForm = null;
+            let previousFocus = null;
+
+            function openModal(form) {
+
+                selectedDeleteForm = form;
+                previousFocus = document.activeElement;
+
+                deleteModal.hidden = false;
                 deleteModal.classList.add("active");
+                deleteModal.setAttribute("aria-hidden", "false");
+
+                document.body.classList.add("modal-open");
+
+                confirmDelete.disabled = false;
+                confirmDelete.textContent = "Yes, Delete";
+
+                modalDialog.focus();
+                cancelDelete.focus();
+            }
+
+            function closeModal() {
+
+                deleteModal.hidden = true;
+                deleteModal.classList.remove("active");
+                deleteModal.setAttribute("aria-hidden", "true");
+
+                document.body.classList.remove("modal-open");
+
+                selectedDeleteForm = null;
+
+                if (previousFocus) {
+                    previousFocus.focus();
+                    previousFocus = null;
+                }
+            }
+
+            deleteButtons.forEach(function (button) {
+
+                button.addEventListener("click", function () {
+
+                    const form = button.closest("form.delete-project-form");
+
+                    if (!form) {
+                        return;
+                    }
+
+                    openModal(form);
+
+                });
+
             });
 
-        });
+            cancelDelete.addEventListener("click", closeModal);
 
-        cancelDelete.addEventListener("click", function () {
-            deleteModal.classList.remove("active");
-            selectedDeleteForm = null;
-        });
+            confirmDelete.addEventListener("click", function () {
 
-        confirmDelete.addEventListener("click", function () {
-            if (selectedDeleteForm) {
-                selectedDeleteForm.submit();
-            }
-        });
+                if (!selectedDeleteForm) {
+                    return;
+                }
 
-        deleteModal.addEventListener("click", function (event) {
-            if (event.target === deleteModal) {
-                deleteModal.classList.remove("active");
-                selectedDeleteForm = null;
-            }
-        });
+                confirmDelete.disabled = true;
+                confirmDelete.textContent = "Deleting...";
 
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                deleteModal.classList.remove("active");
-                selectedDeleteForm = null;
-            }
+                HTMLFormElement.prototype.submit.call(selectedDeleteForm);
+
+            });
+
+            deleteModal.addEventListener("click", function (event) {
+
+                if (event.target === deleteModal) {
+                    closeModal();
+                }
+
+            });
+
+            document.addEventListener("keydown", function (event) {
+
+                if (deleteModal.hidden) {
+                    return;
+                }
+
+                if (event.key === "Escape") {
+                    closeModal();
+                }
+
+            });
+
         });
     </script>
 
