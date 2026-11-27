@@ -10,9 +10,12 @@
     <title>My Learning Goals | Growfession</title>
 
     <link rel="stylesheet" href="{% static 'dashboard/css/developer_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/toast.css' %}">
 </head>
 
 <body class="project-list-page">
+
+    {% include 'includes/_toast_messages.html' %}
 
     <div class="dashboard-layout">
 
@@ -284,8 +287,9 @@
 
     </div>
 
-    <!-- SHARED MODAL JAVASCRIPT -->
+    <!-- SHARED JAVASCRIPT -->
     <script src="{% static 'dashboard/js/modal.js' %}" defer></script>
+    <script src="{% static 'dashboard/js/toast.js' %}" defer></script>
 
 </body>
 </html>
