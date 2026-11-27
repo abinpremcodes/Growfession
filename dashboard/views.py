@@ -9,7 +9,57 @@ from .forms import ProjectForm, TaskForm, LearningGoalForm
 
 @login_required
 def developer_dashboard(request):
-    return render(request, "dashboard/developer_dashboard.html")
+
+    # Dashboard statistics
+    projects_count = Project.objects.filter(
+        user=request.user
+    ).count()
+
+    tasks_count = Task.objects.filter(
+        user=request.user
+    ).count()
+
+    completed_tasks_count = Task.objects.filter(
+        user=request.user,
+        status=Task.Status.COMPLETED
+    ).count()
+
+    learning_goals_count = LearningGoal.objects.filter(
+        user=request.user
+    ).count()
+
+    # Recent projects
+    recent_projects = Project.objects.filter(
+        user=request.user
+    ).order_by("-updated_at")[:3]
+
+    # Upcoming and unfinished tasks
+    upcoming_tasks = Task.objects.filter(
+        user=request.user
+    ).exclude(
+        status=Task.Status.COMPLETED
+    ).order_by("due_date", "-created_at")[:5]
+
+    # Recently updated learning goals
+    learning_goals = LearningGoal.objects.filter(
+        user=request.user
+    ).order_by("-updated_at")[:3]
+
+    context = {
+        "projects_count": projects_count,
+        "tasks_count": tasks_count,
+        "completed_tasks_count": completed_tasks_count,
+        "learning_goals_count": learning_goals_count,
+        "recent_projects": recent_projects,
+        "upcoming_tasks": upcoming_tasks,
+        "learning_goals": learning_goals,
+    }
+
+    return render(
+        request,
+        "dashboard/developer_dashboard.html",
+        context
+    )
 
 
 @login_required

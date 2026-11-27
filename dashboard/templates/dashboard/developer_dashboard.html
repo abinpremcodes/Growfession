@@ -118,6 +118,81 @@
             </section>
 
 
+            <!-- Dashboard Statistics -->
+            <section class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <p class="section-label">YOUR OVERVIEW</p>
+                        <h2>Workspace Statistics</h2>
+
+                        <p class="section-description">
+                            A quick overview of your development journey.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <!-- Total Projects -->
+                    <div class="stat-card">
+
+                        <div class="stat-icon">01</div>
+
+                        <div class="stat-info">
+                            <p>Total Projects</p>
+                            <h3>{{ projects_count }}</h3>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Total Tasks -->
+                    <div class="stat-card">
+
+                        <div class="stat-icon">02</div>
+
+                        <div class="stat-info">
+                            <p>Total Tasks</p>
+                            <h3>{{ tasks_count }}</h3>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Completed Tasks -->
+                    <div class="stat-card">
+
+                        <div class="stat-icon">03</div>
+
+                        <div class="stat-info">
+                            <p>Completed Tasks</p>
+                            <h3>{{ completed_tasks_count }}</h3>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Learning Goals -->
+                    <div class="stat-card">
+
+                        <div class="stat-icon">04</div>
+
+                        <div class="stat-info">
+                            <p>Learning Goals</p>
+                            <h3>{{ learning_goals_count }}</h3>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
             <!-- Developer Hub -->
             <section class="content-section">
 
@@ -192,6 +267,222 @@
                         <span>Explore Goals →</span>
 
                     </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- Recent Projects -->
+            <section class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <p class="section-label">YOUR RECENT WORK</p>
+                        <h2>Recent Projects</h2>
+
+                        <p class="section-description">
+                            Keep an eye on the projects you've recently updated.
+                        </p>
+                    </div>
+
+                    <a href="{% url 'project_list' %}" class="section-link">
+                        View All Projects →
+                    </a>
+
+                </div>
+
+
+                <div class="dashboard-list">
+
+                    {% for project in recent_projects %}
+
+                        <div class="dashboard-list-item">
+
+                            <div class="dashboard-list-content">
+
+                                <h3>{{ project.title }}</h3>
+
+                                <p>
+                                    {{ project.tech_stack }}
+                                </p>
+
+                                <span class="dashboard-item-date">
+                                    Updated {{ project.updated_at|date:"M d, Y" }}
+                                </span>
+
+                            </div>
+
+                            <span class="dashboard-item-status">
+                                {{ project.get_status_display }}
+                            </span>
+
+                        </div>
+
+                    {% empty %}
+
+                        <div class="dashboard-empty-state">
+                            <h3>No projects yet</h3>
+                            <p>
+                                Your recent projects will appear here when you
+                                start adding your development work.
+                            </p>
+
+                            <a href="{% url 'project_create' %}">
+                                Create Your First Project →
+                            </a>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+
+            <!-- Upcoming Tasks -->
+            <section class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <p class="section-label">STAY ORGANIZED</p>
+                        <h2>Upcoming Tasks</h2>
+
+                        <p class="section-description">
+                            Your unfinished tasks, all in one place.
+                        </p>
+                    </div>
+
+                    <a href="{% url 'task_list' %}" class="section-link">
+                        View All Tasks →
+                    </a>
+
+                </div>
+
+
+                <div class="dashboard-list">
+
+                    {% for task in upcoming_tasks %}
+
+                        <div class="dashboard-list-item">
+
+                            <div class="dashboard-list-content">
+
+                                <h3>{{ task.title }}</h3>
+
+                                <p>
+                                    Priority: {{ task.get_priority_display }}
+                                </p>
+
+                                <span class="dashboard-item-date">
+
+                                    {% if task.due_date %}
+                                        Due {{ task.due_date|date:"M d, Y" }}
+                                    {% else %}
+                                        No due date
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+                            <span class="dashboard-item-status">
+                                {{ task.get_status_display }}
+                            </span>
+
+                        </div>
+
+                    {% empty %}
+
+                        <div class="dashboard-empty-state">
+                            <h3>You're all caught up!</h3>
+                            <p>
+                                You don't have any unfinished tasks at the moment.
+                            </p>
+
+                            <a href="{% url 'task_create' %}">
+                                Create a New Task →
+                            </a>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+
+            <!-- Learning Progress -->
+            <section class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <p class="section-label">KEEP LEARNING</p>
+                        <h2>Learning Progress</h2>
+
+                        <p class="section-description">
+                            Track the progress of your latest learning goals.
+                        </p>
+                    </div>
+
+                    <a href="{% url 'learning_goal_list' %}" class="section-link">
+                        View All Goals →
+                    </a>
+
+                </div>
+
+
+                <div class="dashboard-list">
+
+                    {% for goal in learning_goals %}
+
+                        <div class="dashboard-list-item">
+
+                            <div class="dashboard-list-content">
+
+                                <h3>{{ goal.title }}</h3>
+
+                                <p>
+                                    {{ goal.get_status_display }}
+                                </p>
+
+                                <div class="progress-track">
+                                    <div
+                                        class="progress-fill"
+                                        style="width: {{ goal.progress }}%;"
+                                    ></div>
+                                </div>
+
+                                <span class="dashboard-item-date">
+                                    {{ goal.progress }}% completed
+                                </span>
+
+                            </div>
+
+                            <span class="dashboard-item-status">
+                                {{ goal.get_status_display }}
+                            </span>
+
+                        </div>
+
+                    {% empty %}
+
+                        <div class="dashboard-empty-state">
+                            <h3>No learning goals yet</h3>
+                            <p>
+                                Set learning goals and track your progress
+                                as you develop new skills.
+                            </p>
+
+                            <a href="{% url 'learning_goal_create' %}">
+                                Create a Learning Goal →
+                            </a>
+                        </div>
+
+                    {% endfor %}
 
                 </div>
 

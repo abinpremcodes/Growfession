@@ -72,18 +72,9 @@
                     <h3>Learning Goals</h3>
                 </div>
 
-                <div class="user-profile">
-
-                    <div class="user-avatar">
-                        {{ request.user.username|first|upper }}
-                    </div>
-
-                    <div class="user-details">
-                        <strong>{{ request.user.username }}</strong>
-                        <span>Developer</span>
-                    </div>
-
-                </div>
+                <a href="{% url 'developer_dashboard' %}" class="back-dashboard-btn">
+                    Back to Dashboard
+                </a>
 
             </header>
 
